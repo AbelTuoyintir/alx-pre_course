@@ -1,0 +1,1039 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <!-- Include Font Awesome CSS (you can get the link from the Font Awesome website) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #7375d8;
+        }
+
+        .sidebar {
+            width: 170px;
+            background-color: #1e21e4;
+            color: #252d69;
+            position: fixed;
+            height: 100%;
+            overflow: auto;
+            box-shadow: 0.5px 4px 4px rgba(0, 0, 0, 0.3)
+        }
+
+        .logo {
+            padding-top: 25px;
+            padding-left: 50px;
+            
+        }
+
+        .logo img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+        }
+
+        .sidebar a {
+            padding: 15px 15px;
+            padding-left: 10px;
+            margin-top: 2px;
+            width: 140px;
+            height: auto;
+            text-decoration: none;
+            font-size: 14px;
+            align-items: center;
+            align-content: center;
+            border-radius: 2px;
+            color: rgb(81, 81, 185);
+            display: block;
+        }
+        .sidebar a #manu-maintance{
+            font-size: 0.85em;
+        }
+
+        .sidebar a i {
+            padding-left: 7px;
+        }
+
+        .manu_list {
+            padding: 40px 0 0 10px;
+        }
+
+        .sidebar a:hover {
+            background-color: #2e75e0;
+            width: 125px;
+            transition: 0.9s;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .content {
+            margin-left: 220px;
+            padding-left: 20px;
+        }
+
+        hr{
+            width: 155px;
+            color: #5c5ed8;
+        }
+        .form-container {
+            max-width: 750px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #7375d8;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0.5px 4px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .topmanu {
+            background-color: #696be2;
+            border:rgb(12, 12, 26);
+            border-radius: 5px;
+            display: inline-flex;
+            width: 443px;
+            height: 48px;
+            margin-top: 12px;
+            
+        }
+
+        .topmanu a {
+            padding: 10px 25px;
+            width: 45px;
+            margin: 0 10px;
+            font-size: 0.8em;
+            text-align: center;
+            text-decoration: none;
+            color: rgb(10, 10, 26);
+        }
+
+        .topmanu a:hover {
+            background-color: #3336eb;
+            box-shadow: #2c2b2b;
+            transition: 0.9s;
+            width: 50px;
+            color: white;
+            border-radius: 2px;
+            
+            
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        #maintain {
+        display: none;
+        }
+
+        #maintain.form-container {
+            max-width: 750px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #7375d8;
+            border: 1px solid #7375;
+            border-radius: 5px;
+            box-shadow: 0.5px 4px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        #maintain h1 {
+            text-align: center;
+        }
+
+        #maintenance-form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        #maintenance-form label {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.85em;
+        }
+
+        #maintenance-form input[type="text"],
+        #maintenance-form input[type="date"],
+        #maintenance-form input[type="number"],
+        #maintenance-form textarea {
+            width: 100%;
+            padding: 10px;
+            height: 5px;
+            border: 1px solid #7375;
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+
+        #maintenance-form textarea {
+            height: 100px;
+            border: 1px solid #7375;
+            background-color:#7375d8;
+        }
+
+        #maintenance-form button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        #maintenance-form button:hover {
+            background-color: #0056b3;
+        }
+
+
+        #repair {
+        display: none;
+        }
+
+        #repair.form-container {
+            max-width: 750px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #7375d8;
+            border: 1px solid #7375;
+            border-radius: 5px;
+            box-shadow: 0.5px 4px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        #repair h1 {
+            text-align: center;
+        }
+
+        #repair-form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        #repair-form label {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.85em;
+        }
+
+        #repair-form input[type="text"],
+        #repair-form input[type="date"],
+        #repair-form input[type="number"],
+        #repair-form textarea {
+            width: 100%;
+            height: 5px;
+            padding: 10px;
+            border: 1px solid #7375;
+            border-radius: 4px;
+            margin-top: 5px;
+            background-color: #7375d8;
+        }
+
+        #repair-form textarea {
+            height: 100px;
+            border: 1px solid #7375;
+            background-color: #7375d8;
+        }
+
+        #repair-form button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        #repair-form button:hover {
+            background-color: #0056b3;
+        }
+
+
+        .form-container {
+            max-width: 750px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #7375d8;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0.5px 4px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.85ems;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        select{
+            width: 100%;
+            padding: 10px;
+            height: 5px;
+            border: 1px solid #7375;
+            border-radius: 4px;
+            background-color:#7375d8;
+            margin-top: 5px;
+        }
+        
+        textarea{
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #7375;
+            border-radius: 4px;
+            background-color: #7375d8;
+        }
+
+
+        select {
+            height: 40px;
+        }
+
+        .jobOrder{
+            display: none;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #preview{
+            display: none;
+            
+        }
+
+        #preview.form-container{
+            width: 80%px;
+            margin-left: 20px;
+            border: 0;
+            box-shadow: none;
+            background-color: transparent;
+        }
+
+        #preview.form-container h1{
+            margin: 0;
+        }
+
+        table {
+            width: 80%;
+            height: 10px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        th, td {
+            padding: 15px;
+            height: 10px;
+            text-align: left;
+            font-size: 0.75em;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #333;
+            color: #fff;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+
+
+                /* Reset some default styles to start with a clean slate */
+        body, h1, h2, p {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Apply basic styles to the footer */
+        footer {
+            color: #fff; 
+            padding: 20px; 
+            margin: 0;
+        }
+
+        .footer-content {
+            justify-content: space-between; 
+            align-items: center; 
+            max-width: 800px; 
+            margin: 0 auto; 
+        }
+        
+        .footer-social{
+            margin: 0;
+            padding-left: 450px;
+        }
+
+        .footer-nav{
+            padding-left: 300px;
+        }
+
+        .footer-nav ul {
+            list-style: none; /* Remove list bullets */
+        }
+
+        .footer-nav ul li {
+            display: inline; /* Display navigation items in a row */
+            margin-right: 20px; /* Add spacing between items */
+        }
+
+        .footer-nav ul li a {
+            text-decoration: none; /* Remove underlines from links */
+            color: #fff; /* Text color for links */
+        }
+
+        .footer-social a {
+            text-decoration: none; /* Remove underlines from social links */
+            color: #fff; /* Text color for social links */
+            margin-right: 10px; /* Add spacing between social icons */
+            font-size: 20px; /* Set the font size for social icons */
+        }
+
+
+        /* ... (your existing styles) ... */
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="/img/logo.jpg" alt="logo" title="GHANA WATER COMPANY LIMITED">
+        </div>
+        <hr>
+        <div class="manu_list">
+            <a href="dashboard.html">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </a>
+            <a href="staff.html">
+                <i class="fas fa-users"></i> Staff
+            </a>
+            <a href="#" class="active">
+                <i class="fas fa-laptop"></i> Asset
+            </a>
+            <a href="maintenanceAndRepaires.html" style="font-size: 0.85em;">
+                <i class="fas fa-wrench"></i> Maintenance/Repaired
+            </a>
+            <a href="jobOrder.html">
+                <i class="fas fa-tasks"></i> Order jobs
+            </a>
+            <a href="#">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="topmanu">
+            <a href="#" onclick="openTab(event, 'register')">
+                <i class="fas fa-laptop"></i> Register Asset
+            </a>
+            <a href="#" onclick="openTab(event, 'maintain')">
+                <i class="fas fa-wrench"></i> Maintain Asset
+            </a>
+            <a href="#" onclick="openTab(event, 'repair')">
+                <i class="fas fa-tools"></i> Repair Asset
+            </a>
+            <a href="#" onclick="openTab(event, 'preview')">
+                <i class="fas fa-preview"></i>Preview
+            </a>
+        </div>
+        
+
+        <div id="register" class="form-container tabcontent">
+            <h1>Asset Registration Form</h1>
+                <form id="asset-form" action="connect.php" method="POST">
+                    <label for="asset-brand">Brand:</label>
+                    <input type="text" id="asset-brand" name="brand" required><br>
+            
+                    <label for="asset-type">Asset Type:</label>
+                    <select id="asset-type" name="asset-type">
+                        <option value="null"></option>
+                        <option value="Computers">Computers</option>
+                        <option value="Communication Devices">Communication Devices</option>
+                        <option value="Storage devices"> Storage Devices</option>
+                        <option value="Power Supply">Power Supply</option>
+                        <option value="Security Devices">Security Devices</option>
+                        <option value="Multimedia">Multimedia</option>
+                        <option value="Network Equipments">Network Equipments</option>
+                        <option value="Printer and copiers">Printers and Copiers</option>
+                        <!-- Add more options as needed -->
+                    </select><br>
+                    <!-- Second dropdown initially hidden -->
+                    <label for="sub-asset-type" id="sub-asset-label" style="display:none;">Sub Asset Type:</label>
+                    <select id="sub-asset-type" name="sub-asset-type" style="display:none;">
+                        <option value="Laptop">Laptop</option>
+                        <option value="Sytem unit">System unit</option>
+                        <option value="Server"> Server</option>
+                        <option value="All in one">All in one</option>
+                        <!-- Options for sub-asset-type will be added dynamically -->
+                    </select>
+                    <label for="serial-number">Serial Number:</label>
+                    <input type="text" id="serial-number" name="serial-number" required><br>
+            
+                    <label for="asset-tag">Asset Tag:</label>
+                    <input type="text" id="asset-tag" name="asset-tag"><br>
+            
+                    <label for="purchase-date">Purchase Date:</label>
+                    <input type="date" id="purchase-date" name="purchase-date"><br>
+            
+                    <label for="purchase-amount">Purchase Amount:</label>
+                    <input type="number" id="purchase-amount" name="purchase-amount"><br>
+            
+                    <label for="model">Model:</label>
+                    <input type="text" id="model" name="model"><br>
+        
+            
+                    <label for="status">Status:</label>
+                    <select id="status" name="status">
+                        <option value="Operational">Operational</option>
+                        <option value="Under Repair">Under Repair</option>
+                        <option value="Obsolete">Obsolete</option>
+                        <!-- Add more options as needed -->
+                    </select><br>
+    
+                    <label for="location">Location:</label>
+                    <select id="location" name="location">
+                        <option value="null">choose location</option>
+                        <option value="District">District</option>
+                        <option value="Region">Region</option>
+                        <!-- Add more options as needed -->
+                    </select><br>
+
+                    <!-- Second dropdown initially hidden -->
+                    <label for="sub-location-type" id="sub-location-label" style="display:none;">Sub Location:</label>
+                    <select id="sub-location-type" name="sub-location-type" style="display:none;">
+                        <option value="Agbogba">Agbogba</option>
+                        <!-- Options for sub-asset-type will be added dynamically -->
+                    </select>
+            
+                    <label for="assignedTo">Assiged To:</label>
+                    <select id="assignedTo" name="assignedTo">
+                        <option value="Staff">Staff</option>
+                        <option value="Office">Office</option>
+                        <option value="Paypoint">Paypoint</option>
+                        <!-- Add more options as needed -->
+                    </select><br>
+
+                     <!-- Second dropdown initially hidden -->
+                     <label for="sub-office-type" id="sub-office-label" style="display:none;">List of offices:</label>
+                     <select id="sub-office-type" name="sub-office-type" style="display:none;">
+                         <option value="HR main office">HR main office</option>
+                         <option value="HR manager office">HR manager office</option>
+                         <option value="Chief manager office">cheif manager office</option>
+                         <option value="Commercial">Commercial</option>
+                         <option value="IT office">IT office</option>
+                         <option value="Material">Materials office</option>
+                         <option value="Material">Finance office</option>
+                         <!-- Options for sub-asset-type will be added dynamically -->
+                     </select>
+                    <label for="usage-description">Usage Description:</label>
+                    <textarea id="usage-description" name="usage-description"></textarea><br>
+            
+                    <label for="purpose">Purpose/Function:</label>
+                    <textarea id="purpose" name="purpose"></textarea><br>
+            
+                    <button type="submit">Submit</button>
+            </form>
+                <!-- Asset registration form fields -->
+        </div>
+
+        <div id="maintain" class="form-container tabcontent">
+            <h1>Maintenance Form</h1>
+            <form id="maintenance-form">
+                <label for="asset-name-maintenance">Asset Name:</label>
+                <input type="text" id="asset-name-maintenance" name="asset-name-maintenance" required><br>
+    
+                <label for="issue-description">Issue Description:</label>
+                <textarea id="issue-description" name="issue-description"></textarea><br>
+    
+                <label for="maintenance-date">Maintenance Date:</label>
+                <input type="date" id="maintenance-date" name="maintenance-date"><br>
+    
+                <label for="maintenance-cost">Maintenance Cost:</label>
+                <input type="number" id="maintenance-cost" name="maintenance-cost"><br>
+    
+                <button type="submit">Submit Maintenance Request</button>
+            </form>
+        </div>
+
+        <div id="repair" class="form-container tabcontent">
+            <h1>Repair Form</h1>
+            <form id="repair-form">
+                <label for="asset-name-repair">Asset Name:</label>
+                <input type="text" id="asset-name-repair" name="asset-name-repair" required><br>
+    
+                <label for="repair-description">Repair Description:</label>
+                <textarea id="repair-description" name="repair-description"></textarea><br>
+    
+                <label for="repair-date">Repair Date:</label>
+                <input type="date" id="repair-date" name="repair-date"><br>
+
+                <label for="personnel">Job personnel:</label>
+                <select id="personnel" name="personnel">
+                <option>Staff</option>
+                <option>service personnel</option>
+                <option>intern</option>
+                <option>third party</option>
+                </select><br>
+
+                <!--this container is for job order-->
+                <div class="jobOrder" id="jobOrder">
+                <h4>Job Order</h4>
+                <label for="name">Name of thirty party<label>
+                <input type="text" name="name" placeholder="Name of company or person here"><br>
+
+                <label for="location">Location of third party</label>
+                <input type="text" name="location" placeholder="location of third party">
+
+                <label for="contact">contact of third party<label>
+                <input type="text" name="contact" placeholder="xxx xxx xxxx">
+
+                <label for= "priority">Priority</label>
+                <select id= "priority">
+                <option>High</option>
+                <option>Medium</option>
+                <option>low</option>
+                </select>
+                </div>
+
+                <label for="repair-cost">Repair Cost:</label>
+                <input type="number" id="repair-cost" name="repair-cost"><br>
+                <!--add more-->
+    
+                <button type="submit">Submit Repair Request</button>
+            </form>
+        </div>
+        <div id="preview" class="form-container tabcontent">
+            <header>
+                <h1>IT Asset Of Accra East</h1>
+            </header>
+        
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Asset type</th>
+                        <th>Serial number</th>
+                        <th>Asset Tag</th>
+                        <th>Purchase date</th>
+                        <th>Status</th>
+                        <th>location</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Laptop</td>
+                        <td>6584466GFFHA</td>
+                        <td>Admin</td>
+                        <td>12/12/2021</td>
+                        <td>Operational</td>
+                        <td>North East</td>
+                        <td><a href="#"><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Laptop</td>
+                        <td>DGE8445651FG</td>
+                        <td>GWCL/PSD/IT/20</td>
+                        <td>12/12/2021</td>
+                        <td>Operational</td>
+                        <td>North East</td>
+                        <td><a href="#"><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Mobile phone</td>
+                        <td>DGE8445651FG</td>
+                        <td>GWCL/PSD/IT/20</td>
+                        <td>12/12/2021</td>
+                        <td>Operational</td>
+                        <td>Regional</td>
+                        <td><a href="#"><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>switch</td>
+                        <td>DGE8445651FG</td>
+                        <td>GWCL/PSD/IT/20</td>
+                        <td>12/12/2021</td>
+                        <td>Operational</td>
+                        <td>North East</td>
+                        <td><a href="#"><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Laptop</td>
+                        <td>DGE8445651FG</td>
+                        <td>GWCL/PSD/IT/20</td>
+                        <td>12/12/2021</td>
+                        <td>Operational</td>
+                        <td>North East</td>
+                        <td><a href="#"><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <!-- Add more rows as needed -->
+                </tbody>
+            </table>
+        
+
+            <header>
+                <h1>Maintance</h1>
+            </header>
+        
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Asset type</th>
+                        <th>Serial number</th>
+                        <th>Issue Description</th>
+                        <th>Maintenance Date</th>
+                        <th>Maintence Cost(GHC)</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Laptop</td>
+                        <td>6584466GFFHA</td>
+                        <td>Admin</td>
+                        <td>12/12/2021</td>
+                        <td>58.00</td>   
+                        <td><a href="#"><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Laptop</td>
+                        <td>DGE8445651FG</td>
+                        <td>GWCL/PSD/IT/20</td>
+                        <td>12/12/2021</td>
+                        <td>10.00</td>
+                        <td><a href="#"><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Mobile phone</td>
+                        <td>DGE8445651FG</td>
+                        <td>GWCL/PSD/IT/20</td>
+                        <td>12/12/2021</td>
+                        <td>15.00</td>
+                        <td><a href="#"><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>switch</td>
+                        <td>DGE8445651FG</td>
+                        <td>GWCL/PSD/IT/20</td>
+                        <td>12/12/2021</td>
+                        <td>25.00</td>
+                        <td><a href="#"><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Laptop</td>
+                        <td>DGE8445651FG</td>
+                        <td>GWCL/PSD/IT/20</td>
+                        <td>12/12/2021</td>
+                        <td>20.00</td>
+                        <td><a href="#" title="view asset full details "><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <!-- Add more rows as needed -->
+                </tbody>
+            </table><hr>
+
+            <header>
+                <h1>Repaire</h1>
+            </header>
+        
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Asset type</th>
+                        <th>Serial number</th>
+                        <th>Issue Description</th>
+                        <th>Job personnel</th>
+                        <th>Location</th>
+                        <th>contact</th>
+                        <th>priority</th>
+                        <th>Repaired Date</th>
+                        <th>Repaired Cost(GHC)</th>
+                        <th>Details</th>
+                    </tr>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Laptop</td>
+                        <td>6584466GFFHA</td>
+                        <td>Admin</td>
+                        <td>12/12/2021</td>
+                        <td>Operational</td>
+                        <td>North East</td>
+                        <td>North East</td>
+                        <td>North East</td>
+                        <td>North East</td>
+                        <td><a href="#" title="view asset full details "><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Laptop</td>
+                        <td>DGE8445651FG</td>
+                        <td>GWCL/PSD/IT/20</td>
+                        <td>12/12/2021</td>
+                        <td>Operational</td>
+                        <td>North East</td>
+                        <td><a href="#" title="view asset full details "><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Mobile phone</td>
+                        <td>DGE8445651FG</td>
+                        <td>GWCL/PSD/IT/20</td>
+                        <td>12/12/2021</td>
+                        <td>Operational</td>
+                        <td>Regional</td>
+                        <td><a href="#" title="view asset full details "><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>switch</td>
+                        <td>DGE8445651FG</td>
+                        <td>GWCL/PSD/IT/20</td>
+                        <td>12/12/2021</td>
+                        <td>Operational</td>
+                        <td>North East</td>
+                        <td><a href="#" title="view asset full details "><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Laptop</td>
+                        <td>DGE8445651FG</td>
+                        <td>GWCL/PSD/IT/20</td>
+                        <td>12/12/2021</td>
+                        <td>Operational</td>
+                        <td>North East</td>
+                        <td><a href="#" title="view asset full details "><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <!-- Add more rows as needed -->
+                </tbody>
+            </table>
+    </div><hr>
+    </div>
+
+    <!--the footer section might not be necessary but in the future it might be useful that is why i have added it-->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-nav">
+                <p class="copyright">&copy; 2023 Ghana Water company Limited. All Rights Reserved.</p> 
+            </div>
+            <br>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /*
+        targeting html document for javascript functionality programming. 
+
+        first three are for the dropdowns
+        the first one is for asset and it'sub-categories.
+        Second is for loctation and it's sub-categories.
+        third is for offices and it's sub-categories
+
+        personnel is from the rapairs form, it is hide for the initial but is displayed when 
+        the third part repairer is select.
+        */
+        const assetTypeDropdown = document.getElementById("asset-type");
+        const subAssetTypeDropdown = document.getElementById("sub-asset-type");
+        const subAssetLabel = document.getElementById("sub-asset-label");
+
+        const locationTypeDropdown = document.getElementById("location");
+        const subLocationTypeDropdown = document.getElementById("sub-location-type");
+        const subLocationLabel = document.getElementById("sub-location-label");
+        
+        const officeTypeDropdown = document.getElementById("assignedTo");
+        const subofficeTypeDropdown = document.getElementById("sub-office-type");
+        const subofficeLabel = document.getElementById("sub-office-label");
+
+        
+        const personnelDropdown = document.getElementById("personnel");//targeting personnel dropdown
+
+        // Define options for the sub-asset-type based on asset-type
+        const subAssetOptions = {
+            "Computers": ["Laptop", "System Unit", "Server", "All in one"],
+            "Communication Devices": ["Mobile Phone", "Desk phone", "Clock in device"],
+            "Storage Devices":["USB flash drive", "SSD", "Magnetic card", "HDD", "Memory card"],
+            "Security Device": ["CCTV", "Alarm system", "Access control system", "Emergency and fire safety system"],
+            "Powe supply": ["UPS", "Power bank", "AC adapter"],
+            "Network Equipments": ["Routers", "Network Hub", "Network gatway", "Network switch", "Modem", "USB Adapter"],
+            // Add more options as needed
+        };
+
+        // Define option for the Districts under Accra East.
+        const subLocationOptions = {
+            "District": ["Agbogba", "North East", "Accra North"]
+        };
+
+        // Define option for the offices in Accra East Region
+        const subOfficeOptions = {
+            "Office": ["HR main office", "HR manager office", "Chief manager office", "Commercial office", "Materials", "Finance office", "Reciption", "Audit office", "Conference Room"]
+        }
+
+        // Function to update the sub-asset-type dropdown based on asset-type selection
+        function updateSubAssetTypeOptions() {
+            const selectedAssetType = assetTypeDropdown.value;
+            const options = subAssetOptions[selectedAssetType] || [];
+
+            // Clear existing options
+            subAssetTypeDropdown.innerHTML = '';
+
+            // Add new options
+            options.forEach((optionText) => {
+                const option = document.createElement('option');
+                option.value = optionText;
+                option.text = optionText;
+                subAssetTypeDropdown.appendChild(option);
+            });
+
+            // Show or hide the sub-asset-type dropdown and label
+            if (options.length > 0) {
+                subAssetLabel.style.display = "block";
+                subAssetTypeDropdown.style.display = "block";
+            } else {
+                subAssetLabel.style.display = "none";
+                subAssetTypeDropdown.style.display = "none";
+            }
+        }
+
+        function updateSubLocationTypeOptions() {
+            const selectedLocationType = locationTypeDropdown.value;
+            const options = subLocationOptions[selectedLocationType] || [];
+
+            // Clear existing options
+            subLocationTypeDropdown.innerHTML = '';
+
+            // Add new options
+            options.forEach((optionText) => {
+                const option = document.createElement('option');
+                option.value = optionText;
+                option.text = optionText;
+                subLocationTypeDropdown.appendChild(option);
+            });
+
+            // Show or hide the District dropdown and label
+            if (options.length > 0) {
+                subLocationLabel.style.display = "block";
+                subLocationTypeDropdown.style.display = "block";
+            } else {
+                subLocationLabel.style.display = "none";
+                subLocationTypeDropdown.style.display = "none";
+            }
+        }
+
+        function updateSubofficeTypeOptions() {
+            const selectedofficeType = officeTypeDropdown.value;
+            const options = subOfficeOptions[selectedofficeType] || [];
+
+            // Clear existing options
+            subofficeTypeDropdown.innerHTML = '';
+
+            // Add new options
+            options.forEach((optionText) => {
+                const option = document.createElement('option');
+                option.value = optionText;
+                option.text = optionText;
+                subofficeTypeDropdown.appendChild(option);
+            });
+
+            // Show or hide the Sub Office dropdown and label
+            if (options.length > 0) {
+                subofficeLabel.style.display = "block";
+                subofficeTypeDropdown.style.display = "block";
+            } else {
+                subofficeLabel.style.display = "none";
+                subofficeTypeDropdown.style.display = "none";
+            }
+        }
+
+        function updatePersonnel(){
+            if(personnelDropdown.value == "third party"){
+                jobOrder.style.display="block";
+            }else{
+                jobOrder.style.display="none";
+            }
+        }
+
+
+
+        // Add an event listener to the asset-type dropdown to update sub-asset-type options
+        assetTypeDropdown.addEventListener("change", updateSubAssetTypeOptions);
+        locationTypeDropdown.addEventListener("change", updateSubLocationTypeOptions);
+        officeTypeDropdown.addEventListener("change", updateSubofficeTypeOptions);
+
+        personnelDropdown.addEventListener("change", updatePersonnel)
+
+
+        // Initialize the sub-asset-type dropdown options
+        updateSubAssetTypeOptions();
+        updateSubLocationTypeOptions();
+        updateSubofficeTypeOptions();
+
+
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            document.getElementById(tabName).style.display = "none";
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            document.getElementById(tabName).style.display = "block";
+        }
+    </script>
+</body>
+</html>
