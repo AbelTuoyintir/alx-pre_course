@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Tracking System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrapper">
+    <div class="sidebar">
+        <div class="logo">
+            <img src="/img/logo.jpg" alt="logo" title="GHANA WATER COMPANY LIMITED">
+        </div>
+        <hr>
+        <div class="manu_list">
+            <button class="sidebar-toggle">
+                <i class="fas fa-bars"></i> </button>
+              </div>
+            <a href="dashboard.html">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </a>
+            <a href="staff.html">
+                <i class="fas fa-users"></i> Staff
+            </a>
+            <a href="#" class="active">
+                <i class="fas fa-laptop"></i> Asset
+            </a>
+            <a href="report.html">
+                <i class="fas fa-tasks"></i> Report
+            </a>
+            <a href="#">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+            </div>
+
+        </div>
+    </div>
+    <div class="content">
+      <h1>Asset Tracking System</h1>
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Search Assets">
+        <button id="search-button">Search</button>
+        <select id="filter-select">
+          <option value="">All Assets</option>
+          <option value="category1">Category 1</option>
+          <option value="category2">Category 2</option>
+          <option value="category3">Category 3</option>
+        </select>
+      </div>
+      <table id="asset-table">
+        <thead>
+          <tr>
+            <th>Asset ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Location</th>
+            <th>Last Updated</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Management Reports</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+
+    <!-- Include your CSS stylesheets and other meta tags as needed -->
+    <style>
+       body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #d9daf7;
+    }
+
+.sidebar {
+  width: 200px;
+  background-color: #1e21e4;
+  
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  box-shadow: 0.5px 4px 4px rgba(0, 0, 0, 0.3);
+}
+
+.logo {
+  padding-top: 25px;
+  padding-left: 50px;
+}
+
+.logo img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+
+.sidebar a {
+  padding: 15px 15px;
+  padding-left: 10px;
+  margin-top: 2px;
+  width: 140px;
+  height: auto;
+  text-decoration: none;
+  font-size: 14px;
+  align-items: center;
+  align-content: center;
+  border-radius: 2px;
+  color: rgb(213, 213, 233);
+  display: block;
+}
+
+.sidebar a #manu-maintance {
+  font-size: 0.85em;
+}
+
+.sidebar a i {
+  padding-left: 7px;
+}
+
+.manu_list {
+  padding: 40px 0 0 10px;
+}
+
+.sidebar a:hover {
+  background-color: #2e75e0;
+  width: 125px;
+  transition: 0.9s;
+  color: #fff;
+  cursor: pointer;
+}
+
+.content {
+  margin-left: 220px;
+  padding-left: 20px;
+}
+
+hr {
+  width: 155px;
+  color: #5c5ed8;
+}
+
+@media (max-width: 1024px) { /* Medium Screens */
+  .sidebar {
+    width: 160px; /* Adjust sidebar width for medium screens */
+  }
+  
+  .content {
+    margin-left: 160px; /* Adjust content margin-left for medium screens */
+  }
+}
+
+@media (max-width: 768px) { /* Small Screens */
+  .sidebar {
+    width: 90px; /* Collapse sidebar on small screens */
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .content {
+    margin-left: 0; /* Remove margin-left for content when sidebar is collapsed */
+    transition: all 0.3s ease-in-out;
+  }
+}
+
+.sidebar-toggle {
+  display: none; /* Hide button initially */
+}
+
+@media (max-width: 768px) {
+  .sidebar-toggle {
+    display: block; /* Show button on small screens */
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+header {
+  background-color: white;
+  color: #fff;
+  width: 1030px;
+  text-align: center;
+}
+
+.main-header{
+    margin: auto;
+}
+
+section {
+  padding: 20px;
+  width: 1010px;
+  margin: auto;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: #333;
+  font-size: 2em;
+}
+
+h2 {
+  color: #333;
+  font-size: 1em;
+}
+
+p {
+    text-align: center;
+  font-size: 0.85em;
+}
+.key-metrics {
+  display: flex; /* Arrange metrics in a row */
+  flex-wrap: wrap; /* Wrap metrics if needed on smaller screens */
+  margin-bottom: 20px; /* Spacing after key metrics */
+}
+
+.key-metrics li {
+  list-style: none; /* Remove default bullet points */
+  padding: 5px 10px; /* Padding for each metric */
+  margin: 5px; /* Spacing between metrics */
+  border: 1px solid #ddd; /* Light gray border for each metric */
+  border-radius: 5px; /* Rounded corners for metrics */
+  background-color: #f5f5f5; /* Light gray background for each metric */
+}
+
+.report-charts {
+  margin-bottom: 20px; /* Spacing after charts section */
+}
+
+    .chart-container {
+        margin: auto;
+        display: flex; /* Change to block for charts on separate lines */
+        
+        width: 50%;
+        height: 50%;
+        border: 1px solid #333;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+table {
+            width: 80%;
+            height: 10px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        th, td {
+            padding: 15px;
+            height: 10px;
+            text-align: left;
+            font-size: 0.75em;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #333;
+            color: #fff;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        #financialSummary {
+  margin: 20px auto; /* Add some margin for spacing */
+  padding: 15px; /* Add padding for content within the section */
+  border: 1px solid #ddd; /* Create a thin border */
+  border-radius: 5px; /* Add rounded corners for a softer look */
+  background-color: #f5f5f5; /* Light background color */
+}
+
+#financialSummary h2 {
+  margin-bottom: 10px; /* Add space below the heading */
+  font-size: 18px; /* Adjust heading font size */
+  font-weight: bold; /* Make the heading bold */
+}
+
+#financialSummary ul {
+  list-style-type: none; /* Remove default bullet points */
+  padding: 0; /* Reset padding for the list */
+  margin: 0; /* Reset margin for the list */
+}
+
+#financialSummary li {
+  margin-bottom: 5px; /* Add space between list items */
+  font-size: 16px; /* Adjust list item font size */
+}
+
+#financialSummary li span {
+  font-weight: bold; /* Make the values bold for emphasis */
+  margin-left: 10px; /* Add space between label and value */
+}
+
+#totalAssetValue input[type="text"],
+#depreciationExpense input[type="text"],
+#maintenanceCost input[type="text"] {
+    width: 60%;
+    padding: 10px;
+    height: 5px;
+    border: 1px solid #7375;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+section #financialSummary {
+  padding: 20px;
+  width: 1010px;
+  margin: auto;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="/img/logo.jpg" alt="logo" title="GHANA WATER COMPANY LIMITED">
+        </div>
+        <hr>
+        <div class="manu_list">
+            <button class="sidebar-toggle">
+                <i class="fas fa-bars"></i> </button>
+              </div>
+            <a href="dashboard.html">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </a>
+            <a href="staff.html">
+                <i class="fas fa-users"></i> Staff
+            </a>
+            <a href="#" class="active">
+                <i class="fas fa-laptop"></i> Asset
+            </a>
+            <a href="report.html">
+                <i class="fas fa-tasks"></i> Report
+            </a>
+            <a href="#">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="content">
+        <header class="main-header">
+          <h1>IT Equipment Inventory Report (as of May 5, 2024)</h1>
+        </header>
+    
+        <section class="report-summary">
+          <h2>Get a clear snapshot of your IT assets with interactive insights.</h2>
+          <p>This report provides a comprehensive overview of your IT equipment inventory. Use the interactive features to drill down and gain deeper understanding of your assets.</p>
+          <div class="key-metrics">
+            <ul>
+              <li>Total Devices: <span id="total-devices"></span> (View by type)</li>
+              <li>Active Devices: <span id="active-devices"></span> (Monitored and operational)</li>
+              <li>Inactive Devices: <span id="inactive-devices"></span> (Offline, in storage, or retired)</li>
+              <li>Top 5 Manufacturers: <span id="top-manufacturers"></span></li>
+            </ul>
+          </div>
+        </section>
+    
+        <section class="report-charts">
+          <h2>Interactive Charts:</h2>
+          <div class="chart-container">
+            <canvas id="device-distribution"></canvas> (Device Distribution by Type)
+          </div>
+          <h2>Asset Quality Report</h2>
+          <div class="chart-container">
+            <canvas id="assetQualityChart"></canvas> (Asset Quality Distribution)
+          </div>
+          <p>This pie chart provides a visual representation of the distribution of assets based on their quality (fuality, repaired, active, obsolete).</p>
+    
+        <section class="report-filters">
+          <h2>Filters & Exports:</h2>
+          <form id="report-filters">
+            <label for="department">Filter by Department:</label>
+            <select name="department" id="department">
+              <option value="">All Departments</option>
+              <option value="IT">IT</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Sales">Sales</option>
+            </select>
+            <button type="button" onclick="filterReport()">Apply Filters</button>
+            <a href="#" id="export-data">Export Data (CSV)</a>
+          </form>
+        </section>
+    
+        <section id="assetStatusReport">
+          <h2>Asset Status Report</h2>
+          <div id="preview" class="form-container tabcontent">
+            <header>
+                <h1>IT Asset Of Accra East</h1>
+            </header>
+        
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Asset type</th>
+                        <th>Serial number</th>
+                        <th>Asset Tag</th>
+                        <th>Purchase date</th>
+                        <th>Status</th>
+                        <th>location</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Laptop</td>
+                        <td>6584466GFFHA</td>
+                        <td>Admin</td>
+                        <td>12/12/2021</td>
+                        <td>Operational</td>
+                        <td>North East</td>
+                        <td><a href="#"><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Laptop</td>
+                        <td>DGE8445651FG</td>
+                        <td>GWCL/PSD/IT/20</td>
+                        <td>12/12/2021</td>
+                        <td>Operational</td>
+                        <td>North East</td>
+                        <td><a href="#"><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Mobile phone</td>
+                        <td>DGE8445651FG</td>
+                        <td>GWCL/PSD/IT/20</td>
+                        <td>12/12/2021</td>
+                        <td>Operational</td>
+                        <td>Regional</td>
+                        <td><a href="#"><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>switch</td>
+                        <td>DGE8445651FG</td>
+                        <td>GWCL/PSD/IT/20</td>
+                        <td>12/12/2021</td>
+                        <td>Operational</td>
+                        <td>North East</td>
+                        <td><a href="#"><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Laptop</td>
+                        <td>DGE8445651FG</td>
+                        <td>GWCL/PSD/IT/20</td>
+                        <td>12/12/2021</td>
+                        <td>Operational</td>
+                        <td>North East</td>
+                        <td><a href="#"><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <!-- Add more rows as needed -->
+                </tbody>
+            </table>
+        
+
+            <header>
+                <h1>Maintance</h1>
+            </header>
+        
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Asset type</th>
+                        <th>Serial number</th>
+                        <th>Issue Description</th>
+                        <th>Maintenance Date</th>
+                        <th>Maintence Cost(GHC)</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Laptop</td>
+                        <td>6584466GFFHA</td>
+                        <td>Admin</td>
+                        <td>12/12/2021</td>
+                        <td>58.00</td>   
+                        <td><a href="#"><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Laptop</td>
+                        <td>DGE8445651FG</td>
+                        <td>GWCL/PSD/IT/20</td>
+                        <td>12/12/2021</td>
+                        <td>10.00</td>
+                        <td><a href="#"><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Mobile phone</td>
+                        <td>DGE8445651FG</td>
+                        <td>GWCL/PSD/IT/20</td>
+                        <td>12/12/2021</td>
+                        <td>15.00</td>
+                        <td><a href="#"><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>switch</td>
+                        <td>DGE8445651FG</td>
+                        <td>GWCL/PSD/IT/20</td>
+                        <td>12/12/2021</td>
+                        <td>25.00</td>
+                        <td><a href="#"><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Laptop</td>
+                        <td>DGE8445651FG</td>
+                        <td>GWCL/PSD/IT/20</td>
+                        <td>12/12/2021</td>
+                        <td>20.00</td>
+                        <td><a href="#" title="view asset full details "><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <!-- Add more rows as needed -->
+                </tbody>
+            </table><hr>
+
+            <header>
+                <h1>Repaire</h1>
+            </header>
+        
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Asset type</th>
+                        <th>Serial number</th>
+                        <th>Issue Description</th>
+                        <th>Job personnel</th>
+                        <th>Location</th>
+                        <th>contact</th>
+                        <th>priority</th>
+                        <th>Repaired Date</th>
+                        <th>Repaired Cost(GHC)</th>
+                        <th>Details</th>
+                    </tr>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Laptop</td>
+                        <td>6584466GFFHA</td>
+                        <td>Admin</td>
+                        <td>12/12/2021</td>
+                        <td>Operational</td>
+                        <td>North East</td>
+                        <td>North East</td>
+                        <td>North East</td>
+                        <td>North East</td>
+                        <td><a href="#" title="view asset full details "><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Laptop</td>
+                        <td>DGE8445651FG</td>
+                        <td>GWCL/PSD/IT/20</td>
+                        <td>12/12/2021</td>
+                        <td>Operational</td>
+                        <td>North East</td>
+                        <td><a href="#" title="view asset full details "><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Mobile phone</td>
+                        <td>DGE8445651FG</td>
+                        <td>GWCL/PSD/IT/20</td>
+                        <td>12/12/2021</td>
+                        <td>Operational</td>
+                        <td>Regional</td>
+                        <td><a href="#" title="view asset full details "><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>switch</td>
+                        <td>DGE8445651FG</td>
+                        <td>GWCL/PSD/IT/20</td>
+                        <td>12/12/2021</td>
+                        <td>Operational</td>
+                        <td>North East</td>
+                        <td><a href="#" title="view asset full details "><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Laptop</td>
+                        <td>DGE8445651FG</td>
+                        <td>GWCL/PSD/IT/20</td>
+                        <td>12/12/2021</td>
+                        <td>Operational</td>
+                        <td>North East</td>
+                        <td><a href="#" title="view asset full details "><i class="fas fa eye"></i> view</a></td>
+                    </tr>
+                    <!-- Add more rows as needed -->
+                </tbody>
+            </table>
+    </div><hr>
+    </div>
+        </section>
+    
+        <section id="maintenanceHistoryReport">
+          <h2>Maintenance History Report</h2>
+          <p>**Placeholder:** Replace this with content dynamically generated based on actual maintenance data. This section could display a table with columns for asset ID, date of maintenance, performed by, description of work, and next service due.</p>
+        </section>
+
+        <section id="obsoleteAssetIdentificationReport">
+          <h2>Obsolete Asset Identification Report</h2>
+          <p>**Placeholder:** Replace this with content dynamically generated based on actual asset data. This section could display a table with columns for asset ID, type, manufacturer, model, purchase date, and estimated useful life. You can highlight assets nearing the end of their useful life.</p>
+        </section>
+    
+        <section id="locationBasedReports">
+          <h2>Location-Based Reports</h2>
+          <p>**Placeholder:** Replace this with content offering options for location-based reports. You could provide a dropdown menu to select a location and display a summary of assets there, or even integrate a map with asset markers.</p>
+        </section>
+    
+        <section id="financialSummary">
+            <h2>Financial Summary</h2>
+            <ul>
+              <li>
+                <span id="totalAssetValue">Total Asset Value: <input type="text" readonly></span> 
+              </li>
+              <li>
+                <span id="depreciationExpense">Depreciation Expense: <input type="text" readonly> </span> 
+              <li>
+                 <span id="maintenanceCost">Maintenance Costs: <input type="text" readonly width="500px"></span> 
+              </li>
+            </ul>
+          </section>
+    
+        </div>
+    <script>
+        // Replace with actual data fetching logic (placeholder data here)
+        const totalDevices = 100;
+        const activeDevices = 80;
+        const inactiveDevices = 20;
+        const topManufacturers = "Dell (30%), HP (25%), Lenovo (20%), Apple (15%), Asus (10%)";
+
+        document.getElementById("total-devices").textContent = totalDevices;
+        document.getElementById("active-devices").textContent = activeDevices;
+        document.getElementById("inactive-devices").textContent = inactiveDevices;
+        document.getElementById("top-manufacturers").textContent = topManufacturers;
+
+        // Example filter function (replace with actual functionality)
+        function filterReport() {
+        const selectedDepartment = document.getElementById("department").value;
+        // Implement logic to filter data based on selected department
+        console.log("Filtering report by department:", selectedDepartment);
+        }
+
+        const sidebarToggle = document.querySelector('.sidebar-toggle');
+        const sidebar = document.querySelector('.sidebar');
+        const content = document.querySelector('.content');
+
+        sidebarToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('active'); // Add/remove 'active' class to toggle sidebar visibility
+        content.classList.toggle('shifted');
+        sidebar.style.innerhtml = "color: red;" // Add/remove 'shifted' class to adjust content margin
+        });
+
+        // Include Chart.js library (assuming it's loaded in your HTML)
+        const Chart = window.Chart;
+
+        // Replace with actual data fetching logic (placeholder data here)
+        const deviceDistributionData = {
+        labels: ["Desktops", "Laptops", "Servers", "Others"],
+        datasets: [
+            {
+            label: "Number of Devices",
+            data: [40, 30, 15, 15],
+            backgroundColor: ["#2980b9", "#f39c12", "#673ab7", "#e74c3c"],
+            borderColor: "black",
+            borderWidth: 1,
+            },
+        ],
+        };
+
+        const deviceDistributionCtx = document.getElementById("device-distribution").getContext("2d");
+        const deviceDistributionChart = new Chart(deviceDistributionCtx, {
+        type: "bar",
+        data: deviceDistributionData,
+        options: {
+            scales: {
+            yAxes: [{
+                ticks: {
+                beginAtZero: true,
+                },
+            }],
+            },
+            legend: {
+            display: true,
+            labels: {
+                fontSize: 16,
+            },
+            },
+            tooltips: {
+            enabled: true,
+            // customize tooltip display (optional)
+            callbacks: {
+                label: function(tooltipItem, data) {
+                const label = data.datasets[tooltipItem.datasetIndex].label || "";
+                const value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                return label + ": " + value;
+                },
+            },
+            },
+        },
+        });
+
+        // Replace with actual data fetching logic (placeholder data here)
+const assetQualityData = {
+  labels: ["Fuality", "Repaired", "Active", "Obsolete"],
+  datasets: [
+    {
+      label: "Asset Quality",
+      data: [10, 5, 75, 10], /* Replace with actual asset counts */
+      backgroundColor: ["#f7cac9", "#c2e0f0", "#90ee90", "#a9a9a9"],
+      borderColor: "black",
+      borderWidth: 1,
+    },
+  ],
+};
+
+const assetQualityCtx = document.getElementById("assetQualityChart").getContext("2d");
+const assetQualityChart = new Chart(assetQualityCtx, {
+  type: "pie",
+  data: assetQualityData,
+  options: {
+    responsive: true, // Maintain aspect ratio on resize
+    legend: {
+      display: true,
+      labels: {
+        fontSize: 16,
+      },
+    },
+    tooltips: {
+      enabled: true,
+      callbacks: {
+        label: function(tooltipItem, data) {
+          const label = data.datasets[tooltipItem.datasetIndex].label || "";
+          const value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+          const percentage = Math.round((value / data.total) * 100);
+          return label + ": " + value + " (" + percentage + "%)";
+        },
+      },
+    },
+  },
+});
+    </script>
+</body>
+</html>
